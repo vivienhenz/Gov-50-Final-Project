@@ -1,6 +1,6 @@
 ---
 title: "Gov 50 Final Project"
-author: "Your Name Here"
+author: "Vivien Henz"
 description: "My final project"
 output:
   distill::distill_article:
@@ -11,4 +11,4 @@ output:
 
 ## Project thoughts
 
-I am interested in exploring data related to...
+I am interested in exploring data related to climate change and climate vulnerability. I think I could make an interesting project out of investing who is more likely to suffer from climate change impacts based on certain demographics. If thats not possible, I think i'll lean more into polling on climate and see whether or not a certain factor will make someone vote more towards politicians that include climate change mitigation/adaptation in their campaigns.
