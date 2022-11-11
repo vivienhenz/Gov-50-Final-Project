@@ -81,8 +81,3 @@ climateviews|>
 
 ```
 
-df |> 
-    mutate(gsub(" County, ", "_", GeoName))
-    
-    df |> 
-    mutate(gsub(" (County|Parish), ", "_", GeoName))
