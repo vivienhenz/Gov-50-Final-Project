@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.16/header-attrs.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","YCOM6.0_2021_Data_.csv"]}
+  {"type":"character","attributes":{},"value":["annual_aqi_by_county_2022.csv","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/first_visual-1.png","index_files/figure-html5/unnamed-chunk-6-1.png","index_files/header-attrs-2.16/header-attrs.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","YCOM6.0_2021_Data_.csv"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1521,169 +1521,94 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>I am interested in exploring data related to climate change and climate vulnerability. I think I could make an interesting project out of investing who is more likely to suffer from climate change impacts based on certain demographics. If thats not possible, I think i’ll lean more into polling on climate and see whether or not a certain factor will make someone vote more towards politicians that include climate change mitigation/adaptation in their campaigns.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>airquality</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code>    Ozone Solar.R Wind Temp Month Day
-1      41     190  7.4   67     5   1
-2      36     118  8.0   72     5   2
-3      12     149 12.6   74     5   3
-4      18     313 11.5   62     5   4
-5      NA      NA 14.3   56     5   5
-6      28      NA 14.9   66     5   6
-7      23     299  8.6   65     5   7
-8      19      99 13.8   59     5   8
-9       8      19 20.1   61     5   9
-10     NA     194  8.6   69     5  10
-11      7      NA  6.9   74     5  11
-12     16     256  9.7   69     5  12
-13     11     290  9.2   66     5  13
-14     14     274 10.9   68     5  14
-15     18      65 13.2   58     5  15
-16     14     334 11.5   64     5  16
-17     34     307 12.0   66     5  17
-18      6      78 18.4   57     5  18
-19     30     322 11.5   68     5  19
-20     11      44  9.7   62     5  20
-21      1       8  9.7   59     5  21
-22     11     320 16.6   73     5  22
-23      4      25  9.7   61     5  23
-24     32      92 12.0   61     5  24
-25     NA      66 16.6   57     5  25
-26     NA     266 14.9   58     5  26
-27     NA      NA  8.0   57     5  27
-28     23      13 12.0   67     5  28
-29     45     252 14.9   81     5  29
-30    115     223  5.7   79     5  30
-31     37     279  7.4   76     5  31
-32     NA     286  8.6   78     6   1
-33     NA     287  9.7   74     6   2
-34     NA     242 16.1   67     6   3
-35     NA     186  9.2   84     6   4
-36     NA     220  8.6   85     6   5
-37     NA     264 14.3   79     6   6
-38     29     127  9.7   82     6   7
-39     NA     273  6.9   87     6   8
-40     71     291 13.8   90     6   9
-41     39     323 11.5   87     6  10
-42     NA     259 10.9   93     6  11
-43     NA     250  9.2   92     6  12
-44     23     148  8.0   82     6  13
-45     NA     332 13.8   80     6  14
-46     NA     322 11.5   79     6  15
-47     21     191 14.9   77     6  16
-48     37     284 20.7   72     6  17
-49     20      37  9.2   65     6  18
-50     12     120 11.5   73     6  19
-51     13     137 10.3   76     6  20
-52     NA     150  6.3   77     6  21
-53     NA      59  1.7   76     6  22
-54     NA      91  4.6   76     6  23
-55     NA     250  6.3   76     6  24
-56     NA     135  8.0   75     6  25
-57     NA     127  8.0   78     6  26
-58     NA      47 10.3   73     6  27
-59     NA      98 11.5   80     6  28
-60     NA      31 14.9   77     6  29
-61     NA     138  8.0   83     6  30
-62    135     269  4.1   84     7   1
-63     49     248  9.2   85     7   2
-64     32     236  9.2   81     7   3
-65     NA     101 10.9   84     7   4
-66     64     175  4.6   83     7   5
-67     40     314 10.9   83     7   6
-68     77     276  5.1   88     7   7
-69     97     267  6.3   92     7   8
-70     97     272  5.7   92     7   9
-71     85     175  7.4   89     7  10
-72     NA     139  8.6   82     7  11
-73     10     264 14.3   73     7  12
-74     27     175 14.9   81     7  13
-75     NA     291 14.9   91     7  14
-76      7      48 14.3   80     7  15
-77     48     260  6.9   81     7  16
-78     35     274 10.3   82     7  17
-79     61     285  6.3   84     7  18
-80     79     187  5.1   87     7  19
-81     63     220 11.5   85     7  20
-82     16       7  6.9   74     7  21
-83     NA     258  9.7   81     7  22
-84     NA     295 11.5   82     7  23
-85     80     294  8.6   86     7  24
-86    108     223  8.0   85     7  25
-87     20      81  8.6   82     7  26
-88     52      82 12.0   86     7  27
-89     82     213  7.4   88     7  28
-90     50     275  7.4   86     7  29
-91     64     253  7.4   83     7  30
-92     59     254  9.2   81     7  31
-93     39      83  6.9   81     8   1
-94      9      24 13.8   81     8   2
-95     16      77  7.4   82     8   3
-96     78      NA  6.9   86     8   4
-97     35      NA  7.4   85     8   5
-98     66      NA  4.6   87     8   6
-99    122     255  4.0   89     8   7
-100    89     229 10.3   90     8   8
-101   110     207  8.0   90     8   9
-102    NA     222  8.6   92     8  10
-103    NA     137 11.5   86     8  11
-104    44     192 11.5   86     8  12
-105    28     273 11.5   82     8  13
-106    65     157  9.7   80     8  14
-107    NA      64 11.5   79     8  15
-108    22      71 10.3   77     8  16
-109    59      51  6.3   79     8  17
-110    23     115  7.4   76     8  18
-111    31     244 10.9   78     8  19
-112    44     190 10.3   78     8  20
-113    21     259 15.5   77     8  21
-114     9      36 14.3   72     8  22
-115    NA     255 12.6   75     8  23
-116    45     212  9.7   79     8  24
-117   168     238  3.4   81     8  25
-118    73     215  8.0   86     8  26
-119    NA     153  5.7   88     8  27
-120    76     203  9.7   97     8  28
-121   118     225  2.3   94     8  29
-122    84     237  6.3   96     8  30
-123    85     188  6.3   94     8  31
-124    96     167  6.9   91     9   1
-125    78     197  5.1   92     9   2
-126    73     183  2.8   93     9   3
-127    91     189  4.6   93     9   4
-128    47      95  7.4   87     9   5
-129    32      92 15.5   84     9   6
-130    20     252 10.9   80     9   7
-131    23     220 10.3   78     9   8
-132    21     230 10.9   75     9   9
-133    24     259  9.7   73     9  10
-134    44     236 14.9   81     9  11
-135    21     259 15.5   76     9  12
-136    28     238  6.3   77     9  13
-137     9      24 10.9   71     9  14
-138    13     112 11.5   71     9  15
-139    46     237  6.9   78     9  16
-140    18     224 13.8   67     9  17
-141    13      27 10.3   76     9  18
-142    24     238 10.3   68     9  19
-143    16     201  8.0   82     9  20
-144    13     238 12.6   64     9  21
-145    23      14  9.2   71     9  22
-146    36     139 10.3   81     9  23
-147     7      49 10.3   69     9  24
-148    14      20 16.6   63     9  25
-149    30     193  6.9   70     9  26
-150    NA     145 13.2   77     9  27
-151    14     191 14.3   75     9  28
-152    18     131  8.0   76     9  29
-153    20     223 11.5   68     9  30</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>climateviews</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"YCOM6.0_2021_Data_.csv"</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>climateviews</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/readr/man/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"YCOM6.0_2021_Data_.csv"</span><span class='op'>)</span></span>
+<span><span class='va'>airquality</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/readr/man/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"annual_aqi_by_county_2022.csv"</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
 <p>My research question will be: Does having proggressive viesws on climate change in a city reduce its air pollution levels?</p>
-<p>MY hypothesis that is related to the research question is that yes, habitants of a city that have on average more proggressive views will have a city that has reduced air pollution. I’m formulating this hypothesis because of two assumptions: the first one is that people that tend to have more proggressive views on climate change in general choose to live in cities that have a reputation for clean air. why? because proggressives just care more. Secondly, and most importantly, people that tend to have more proggressive views on climate change also tend to vote accordingly. This means that they will vote for candidates that for example will place greater emphasis on measures that reduce CO2 emissions within the city, such as public transport, industrial de-zoning, clean energy alternative projects and so on. The explanatory variable that will be most important to my project will be the average view on climate change of cities, this is measured as the percentage of people that responded postitively to the polling question “Climate Change is Happening.”. There are other variables inside the “airquality” database that I imported, such as the opinion on whether to regulate, fund renewable energy or limit CO2 emmissions. For my outcome variabel, PM2.5 concentrations in the cities, the values shown are the highest among the sites in each area. Data from exceptional events are included. This summary is not adequate in itself to numerically rank CBSAs according to their air quality. The monitoring data represent the quality of air in the vicinity of the monitoring site and, for some pollutants, may not necessarily represent urban-wide air quality. An observed pattern where greater PM2.5 concentrations are matched with less progressive views on climate change will proove my hypothesis. No pattern observed, or even an opposite pattern will disprove my hypothesis.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>MY hypothesis that is related to the research question is that yes, habitants of a county that have on average more proggressive views will have a county that has reduced air pollution. I’m formulating this hypothesis because of two assumptions: the first one is that people that tend to have more proggressive views on climate change in general choose to live in counties that have a reputation for clean air. why? because proggressives just care more. Secondly, and most importantly, people that tend to have more proggressive views on climate change also tend to vote accordingly. This means that they will vote for candidates that for example will place greater emphasis on measures that reduce CO2 emissions within the county, such as public transport, industrial de-zoning, clean energy alternative projects and so on. The explanatory variable that will be most important to my project will be the average view on climate change of cities, this is measured as the percentage of people that responded postitively to the polling question “Climate Change is Happening.”. There are other variables inside the “airquality” database that I imported, such as the opinion on whether to regulate, fund renewable energy or limit CO2 emmissions. For my outcome variabel, PM2.5 concentrations in the cities, the values shown are the highest among the sites in each area. Data from exceptional events are included. This summary is not adequate in itself to numerically rank CBSAs according to their air quality. The monitoring data represent the quality of air in the vicinity of the monitoring site and, for some pollutants, may not necessarily represent urban-wide air quality. An observed pattern where greater PM2.5 concentrations are matched with less progressive views on climate change will proove my hypothesis. No pattern observed, or even an opposite pattern will disprove my hypothesis.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>climateviews</span> <span class='op'>&lt;-</span> <span class='va'>climateviews</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>GeoType</span> <span class='op'>==</span> <span class='st'>"County"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>airquality</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>12</span><span class='op'>]</span> <span class='op'>=</span><span class='st'>"MedianAQI"</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>airquality</span> <span class='op'>&lt;-</span> <span class='va'>airquality</span> <span class='op'><a href='https://rdrr.io/pkg/magrittr/man/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/tidyr/man/unite.html'>unite</a></span><span class='op'>(</span><span class='st'>"GeoName"</span>, <span class='va'>County</span><span class='op'>:</span><span class='va'>State</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>climateviews</span> <span class='op'>&lt;-</span> <span class='va'>climateviews</span> <span class='op'><a href='https://rdrr.io/pkg/magrittr/man/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>GeoType</span>, <span class='va'>GEOID</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>climateviews</span> <span class='op'>|&gt;</span> </span>
+<span>    <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/mutate.html'>mutate</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gsub</a></span><span class='op'>(</span><span class='st'>" (County|Parish), "</span>, <span class='st'>"_"</span>, <span class='st'>"Autauga County, Alabama"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code># A tibble: 3,142 × 63
+   GeoName       Total…¹ happe…² happe…³ human human…⁴ conse…⁵ conse…⁶
+   &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Autauga Coun…   42174    59.2   21.5   45.5    39.6    43.4    29.7
+ 2 Baldwin Coun…  166595    60.5   24.4   44.7    38.9    42.8    32.5
+ 3 Barbour Coun…   20057    68.1   12.9   50.5    35.9    46.8    22.6
+ 4 Bibb County,…   17877    57.6   22.6   42.6    42.2    38.0    31.4
+ 5 Blount Count…   44291    52.5   28.6   41.5    42.3    36.2    35.1
+ 6 Bullock Coun…    8119    73.1    7.82  53.4    34.1    51.5    17.9
+ 7 Butler Count…   15433    65.3   14.8   47.5    38.6    43.7    25.5
+ 8 Calhoun Coun…   89665    62.7   20.4   48.7    36.5    45.0    28.5
+ 9 Chambers Cou…   26594    65.6   15.6   47.0    39.3    44.6    26.4
+10 Cherokee Cou…   20657    57.3   26.3   43.8    40.0    39.4    33.1
+# … with 3,132 more rows, 55 more variables: affectweather &lt;dbl&gt;,
+#   affectweatherOppose &lt;dbl&gt;, worried &lt;dbl&gt;, worriedOppose &lt;dbl&gt;,
+#   harmplants &lt;dbl&gt;, harmplantsOppose &lt;dbl&gt;, futuregen &lt;dbl&gt;,
+#   futuregenOppose &lt;dbl&gt;, devharm &lt;dbl&gt;, devharmOppose &lt;dbl&gt;,
+#   harmUS &lt;dbl&gt;, harmUSOppose &lt;dbl&gt;, personal &lt;dbl&gt;,
+#   personalOppose &lt;dbl&gt;, timing &lt;dbl&gt;, timingOppose &lt;dbl&gt;,
+#   exp &lt;dbl&gt;, expOppose &lt;dbl&gt;, fundrenewables &lt;dbl&gt;, …</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>climateviews</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>TotalPop</span>,</span>
+<span>                       y <span class='op'>=</span> <span class='va'>happening</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/geom_point.html'>geom_point</a></span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.5</span>, color <span class='op'>=</span> <span class='st'>"Dodgerblue1"</span><span class='op'>)</span><span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"County Population and Views on Cimate Change"</span>,</span>
+<span>       x <span class='op'>=</span> <span class='st'>"County Population"</span>,</span>
+<span>       y <span class='op'>=</span> <span class='st'>"Percentage of Habitants that Believe in Climate Change"</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>climateviews</span><span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/ggplot.html'>ggplot</a></span><span class='op'>(</span>mapping <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='va'>TotalPop</span><span class='op'>)</span>,</span>
+<span>                       y <span class='op'>=</span> <span class='va'>happening</span><span class='op'>)</span><span class='op'>)</span><span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/geom_point.html'>geom_point</a></span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.5</span>, color <span class='op'>=</span> <span class='st'>"Dodgerblue1"</span><span class='op'>)</span><span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span><span class='op'>)</span><span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://rdrr.io/pkg/ggplot2/man/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"County Population and Views on Cimate Change"</span>,</span>
+<span>       x <span class='op'>=</span> <span class='st'>"Log of County Population"</span>,</span>
+<span>       y <span class='op'>=</span> <span class='st'>"Percentage of Habitants that Believe in Climate Change"</span><span class='op'>)</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/first_visual-1.png" width="624" /></p>
+</div>
+<p>df |&gt;
+mutate(gsub(” County, “,”_“, GeoName))</p>
+<pre><code>df |&gt; 
+mutate(gsub(&quot; (County|Parish), &quot;, &quot;_&quot;, GeoName))</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
