@@ -1521,14 +1521,17 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>I am interested in exploring data related to climate change and climate vulnerability. I think I could make an interesting project out of investing who is more likely to suffer from climate change impacts based on certain demographics. If thats not possible, I think i’ll lean more into polling on climate and see whether or not a certain factor will make someone vote more towards politicians that include climate change mitigation/adaptation in their campaigns.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
-<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>climateviews</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/readr/man/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"YCOM6.0_2021_Data_.csv"</span><span class='op'>)</span></span>
-<span><span class='va'>airquality</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/readr/man/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"annual_aqi_by_county_2022.csv"</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>airquality</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/readr/man/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"annual_aqi_by_county_2022.csv"</span><span class='op'>)</span></span></code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>climateviews</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/readr/man/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"YCOM6.0_2021_Data_.csv"</span><span class='op'>)</span></span></code></pre>
 </div>
 </div>
 <p>My research question will be: Does having proggressive viesws on climate change in a city reduce its air pollution levels?</p>
@@ -1549,34 +1552,29 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>climateviews</span> <span class='op'>&lt;-</span> <span class='va'>climateviews</span> <span class='op'><a href='https://rdrr.io/pkg/magrittr/man/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>GeoType</span>, <span class='va'>GEOID</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
-</div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>climateviews</span> <span class='op'>|&gt;</span> </span>
-<span>    <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/mutate.html'>mutate</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gsub</a></span><span class='op'>(</span><span class='st'>" (County|Parish), "</span>, <span class='st'>"_"</span>, <span class='st'>"Autauga County, Alabama"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+<span>    <span class='fu'><a href='https://rdrr.io/pkg/dplyr/man/mutate.html'>mutate</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gsub</a></span><span class='op'>(</span><span class='st'>"(County|Parish), "</span>, <span class='st'>"_"</span>, <span class='st'>"Autauga_Alabama"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
 </div>
-<pre><code># A tibble: 3,142 × 63
-   GeoName       Total…¹ happe…² happe…³ human human…⁴ conse…⁵ conse…⁶
-   &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
- 1 Autauga Coun…   42174    59.2   21.5   45.5    39.6    43.4    29.7
- 2 Baldwin Coun…  166595    60.5   24.4   44.7    38.9    42.8    32.5
- 3 Barbour Coun…   20057    68.1   12.9   50.5    35.9    46.8    22.6
- 4 Bibb County,…   17877    57.6   22.6   42.6    42.2    38.0    31.4
- 5 Blount Count…   44291    52.5   28.6   41.5    42.3    36.2    35.1
- 6 Bullock Coun…    8119    73.1    7.82  53.4    34.1    51.5    17.9
- 7 Butler Count…   15433    65.3   14.8   47.5    38.6    43.7    25.5
- 8 Calhoun Coun…   89665    62.7   20.4   48.7    36.5    45.0    28.5
- 9 Chambers Cou…   26594    65.6   15.6   47.0    39.3    44.6    26.4
-10 Cherokee Cou…   20657    57.3   26.3   43.8    40.0    39.4    33.1
-# … with 3,132 more rows, 55 more variables: affectweather &lt;dbl&gt;,
-#   affectweatherOppose &lt;dbl&gt;, worried &lt;dbl&gt;, worriedOppose &lt;dbl&gt;,
-#   harmplants &lt;dbl&gt;, harmplantsOppose &lt;dbl&gt;, futuregen &lt;dbl&gt;,
-#   futuregenOppose &lt;dbl&gt;, devharm &lt;dbl&gt;, devharmOppose &lt;dbl&gt;,
-#   harmUS &lt;dbl&gt;, harmUSOppose &lt;dbl&gt;, personal &lt;dbl&gt;,
-#   personalOppose &lt;dbl&gt;, timing &lt;dbl&gt;, timingOppose &lt;dbl&gt;,
-#   exp &lt;dbl&gt;, expOppose &lt;dbl&gt;, fundrenewables &lt;dbl&gt;, …</code></pre>
+<pre><code># A tibble: 3,142 × 65
+   GeoType GEOID GeoName Total…¹ happe…² happe…³ human human…⁴ conse…⁵
+   &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 County   1001 Autaug…   42174    59.2   21.5   45.5    39.6    43.4
+ 2 County   1003 Baldwi…  166595    60.5   24.4   44.7    38.9    42.8
+ 3 County   1005 Barbou…   20057    68.1   12.9   50.5    35.9    46.8
+ 4 County   1007 Bibb C…   17877    57.6   22.6   42.6    42.2    38.0
+ 5 County   1009 Blount…   44291    52.5   28.6   41.5    42.3    36.2
+ 6 County   1011 Bulloc…    8119    73.1    7.82  53.4    34.1    51.5
+ 7 County   1013 Butler…   15433    65.3   14.8   47.5    38.6    43.7
+ 8 County   1015 Calhou…   89665    62.7   20.4   48.7    36.5    45.0
+ 9 County   1017 Chambe…   26594    65.6   15.6   47.0    39.3    44.6
+10 County   1019 Cherok…   20657    57.3   26.3   43.8    40.0    39.4
+# … with 3,132 more rows, 56 more variables: consensusOppose &lt;dbl&gt;,
+#   affectweather &lt;dbl&gt;, affectweatherOppose &lt;dbl&gt;, worried &lt;dbl&gt;,
+#   worriedOppose &lt;dbl&gt;, harmplants &lt;dbl&gt;, harmplantsOppose &lt;dbl&gt;,
+#   futuregen &lt;dbl&gt;, futuregenOppose &lt;dbl&gt;, devharm &lt;dbl&gt;,
+#   devharmOppose &lt;dbl&gt;, harmUS &lt;dbl&gt;, harmUSOppose &lt;dbl&gt;,
+#   personal &lt;dbl&gt;, personalOppose &lt;dbl&gt;, timing &lt;dbl&gt;,
+#   timingOppose &lt;dbl&gt;, exp &lt;dbl&gt;, expOppose &lt;dbl&gt;, …</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -1604,6 +1602,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p><img src="index_files/figure-html5/first_visual-1.png" width="624" /></p>
 </div>
+<p>Data visualisation number 2 is a scatterplot representing the log of each county’s population and the percentage of people in these counties that responded that they believed in climate change. I’ve chosen to take the log of the population because as seen in data visualtion number 1, the range of county population goes from hundreds to millions, compressing the x-axis. After taking the linear regression, we can see that the relationship between the two variables is positive, meaning that the bigger the county population is, the greater the proportion of its citizens will believe in climate change. This is important for my research project because it explores one of the ways in which my potential findings will have confounding variables, in this case, county population affects climate views, and therefore county population could affect the way people are voting.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
