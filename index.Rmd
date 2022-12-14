@@ -1,7 +1,7 @@
 ---
 title: "Gov 50 Final Project"
 author: "Vivien Henz"
-description: "My final project"
+description: "An Investigation of the Relationship between Voting Patterns in U.S. Counties and Air Quality"
 output:
   distill::distill_article:
     self_contained: false
@@ -9,75 +9,154 @@ output:
 
 
 
-## Project thoughts
+## Introduction
 
-I am interested in exploring data related to climate change and climate vulnerability. I think I could make an interesting project out of investing who is more likely to suffer from climate change impacts based on certain demographics. If thats not possible, I think i'll lean more into polling on climate and see whether or not a certain factor will make someone vote more towards politicians that include climate change mitigation/adaptation in their campaigns.
-
-```{r}
+```{r, echo=FALSE}
 library(tidyverse)
-library(dplyr)
 ```
 
-```{r}
-climateviews <- read_csv("YCOM6.0_2021_Data_.csv")
+```{r, echo=FALSE}
 airquality <- read_csv("annual_aqi_by_county_2022.csv")
 ```
 
-My research question will be: Does having proggressive viesws on climate change in a city reduce its air pollution levels?
+```{r, echo=FALSE}
+climateviews <- read_csv("YCOM6.0_2021_Data_.csv")
+```
 
-MY hypothesis that is related to the research question is that yes, habitants of a county that have on average more proggressive views will have a county that has reduced air pollution. I'm formulating this hypothesis because of two assumptions: the first one is that people that tend to have more proggressive views on climate change in general choose to live in counties that have a reputation for clean air. why? because proggressives just care more. Secondly, and most importantly, people that tend to have more proggressive views on climate change also tend to vote accordingly. This means that they will vote for candidates that for example will place greater emphasis on measures that reduce CO2 emissions within the county, such as public transport, industrial de-zoning, clean energy alternative projects and so on. The explanatory variable that will be most important to my project will be the average view on climate change of cities, this is measured as the percentage of people that responded postitively to the polling question "Climate Change is Happening.". There are other variables inside the "airquality" database that I imported, such as the opinion on whether to regulate, fund renewable energy or limit CO2 emmissions. For my outcome variabel, PM2.5 concentrations in the cities, the values shown are the highest among the sites in each area. Data from exceptional events are included.  This summary is not adequate in itself to numerically rank CBSAs according to their air quality.  The monitoring data represent the quality of air in the vicinity of the monitoring site and, for some pollutants, may not necessarily represent urban-wide air quality. An observed pattern where greater PM2.5 concentrations are matched with less progressive views on climate change will proove my hypothesis. No pattern observed, or even an opposite pattern will disprove my hypothesis.
+#### Research Question
 
-```{r tidying_the_data}
+How does environmental policy views of U.S. county residents affect their county's air quality?
+
+I am interested in exploring data related to climate change and climate vulnerability. I think I could make an interesting project out of investigating whether or not the voting patterns of citizens actually have an impact on environmental improvements in their local area. This is worth exploring because it would give an insight into whether or not people's opinions actually matter when it comes to environmental efforts, and whether environmental improvements are driven by the will of the people, or more external factors.
+
+#### Hypothesis
+
+My hypothesis that is related to the research question is that yes, habitants of a county that have on average more proggressive views regarding climate change will have a county that has reduced air pollution. I'm formulating this hypothesis because of two assumptions: the first one is that people that tend to have more proggressive views on climate change in general choose to live in counties that have a reputation for clean air. why? because proggressives just care more. Secondly, and most importantly, people that tend to have more proggressive views on climate change also tend to vote accordingly. This means that they will vote for candidates that for example will place greater emphasis on measures that reduce CO2 emissions within the county, such as public transport, industrial de-zoning, clean energy alternative projects and so on. The explanatory variable that will be most important to my project will be the average view on climate change of cities, this is measured as the percentage of people that responded postitively to the polling question "Climate Change is Happening.". There are other variables inside the "airquality" database that I imported, such as the opinion on whether to regulate, fund renewable energy or limit CO2 emmissions. For my outcome variabel, PM2.5 concentrations in the cities, the values shown are the highest among the sites in each area. Data from exceptional events are included.  This summary is not adequate in itself to numerically rank CBSAs according to their air quality.  The monitoring data represent the quality of air in the vicinity of the monitoring site and, for some pollutants, may not necessarily represent urban-wide air quality. An observed pattern where greater PM2.5 concentrations are matched with less progressive views on climate change will proove my hypothesis. No pattern observed, or even an opposite pattern will disprove my hypothesis.
+
+
+
+
+
+
+
+## Data 
+
+```{r, echo=FALSE}
 
 climateviews <- climateviews|>
   filter(GeoType == "County")
 
-colnames(airquality)[12] ="MedianAQI"
-
-```
-
-```{r}
-
 airquality <- airquality %>%
   unite("GeoName", County:State)
-  
+ 
+names(airquality)[4] <- 'good_days'
+names(airquality)[16] <- 'pm25'
+names(airquality)[12] <- 'median_aqi'
+names(airquality)[11] <- 'aqi_90_percentile'
+
+climateviews <- climateviews |> 
+    mutate(gsub(" (County|Parish), ", "_", GeoName)) 
+
+colnames(climateviews)[65] ="GeoName"
+climateviews <- climateviews[, -3]
+
+climateviews <- climateviews |>
+  inner_join(airquality)
 ```
 
-```{r}
+#### Data Source Description
+cross sectional
 
-climateviews <- climateviews %>% select(-c(GeoType, GEOID))
+#### Independent Variable
 
+#### Dependent Variable
+
+
+```{r, echo=FALSE}
+climateviews |>
+  ggplot(mapping = aes(x = aqi_90_percentile))+
+  geom_histogram()
 ```
 
-```{r}
-climateviews |> 
-    mutate(gsub(" (County|Parish), ", "_", "Autauga County, Alabama"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Results
+
+#### 
+
+```{r, echo=FALSE}
+climateviews |>
+  ggplot(mapping = aes(x = regulate,
+                       y = aqi_90_percentile))+
+  geom_point(alpha = 0.5, color = "dodgerblue1")+
+  geom_smooth(method = "lm", se = F, color = "black")+
+ labs(title = "Views on Air Pollution and County AQI Score",
+            x = "Percentage of County Pop. that Support Regulating CO2 as a Pollutant",
+            y = "County AQI Score")
 ```
 
-
-```{r}
-climateviews|>
-  ggplot(mapping = aes(x = TotalPop,
-                       y = happening))+
-  geom_point(alpha = 0.5, color = "Dodgerblue1")+
-  geom_smooth()+
-  labs(title = "County Population and Views on Cimate Change",
-       x = "County Population",
-       y = "Percentage of Habitants that Believe in Climate Change")
-```
-
-```{r first_visual}
-climateviews|>
+```{r,echo=FALSE}
+plot1 <- climateviews|>
   ggplot(mapping = aes(x = log(TotalPop),
-                       y = happening))+
+                       y = regulate))+
   geom_point(alpha = 0.5, color = "Dodgerblue1")+
-  geom_smooth(method = "lm")+
-  labs(title = "County Population and Views on Cimate Change",
+  geom_smooth(method = "lm", se = F, color = "black")+
+  labs(title = "County Population and Views on Air Pollution",
        x = "Log of County Population",
-       y = "Percentage of Habitants that Believe in Climate Change")
+       y = "Percentage of County Pop. that Support Regulating CO2 as a Pollutant")
+plot1
 
-
-
+plot2 <- climateviews|>
+  ggplot(mapping = aes(x = log(TotalPop),
+                       y = aqi_90_percentile))+
+  geom_point(alpha = 0.5, color = "Dodgerblue1")+
+  geom_smooth(method = "lm", se = F, color = "Black")+
+  labs(title = "County Population and AQI Score ",
+       x = "Log of County Population",
+       y = "Median AQI")
+plot2
 
 ```
+Data visualisation number 2 is a scatterplot representing the log of each county's population and the percentage of people in these counties that responded that they believed in climate change. I've chosen to take the log of the population because as seen in data visualtion number 1, the range of county population goes from hundreds to millions, compressing the x-axis. After taking the linear regression, we can see that the relationship between the two variables is positive, meaning that the bigger the county population is, the greater the proportion of its citizens will believe in climate change. This is important for my research project because it explores one of the ways in which my potential findings will have confounding variables, in this case, county population affects climate views, and therefore county population could affect the way people are voting.
 
+
+#### Multi-Variable Regression
+```{r, echo=FALSE}
+library(infer)
+reg_control <- lm(regulate ~ aqi_90_percentile + log(TotalPop), data = climateviews)
+
+
+modelsummary::modelsummary(reg_control,
+                           statistic = c("s.e. = {std.error}",
+                                         "p = {p.value}"),
+                           gof_map = c("nobs", "r.squared", "adj.r.squared"))
+```
+
+
+## Conclusion
+
+
+
+
+
+## Works Cited
+
+Howe, P., Mildenberger, M., Marlon, J.R., and Leiserowitz, A., “Geographic variation in opinions on climate change at state and local scales in the USA,” Nature Climate Change. DOI: 10.1038/nclimate2583.
