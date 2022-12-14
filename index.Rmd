@@ -1,5 +1,5 @@
 ---
-title: "Gov 50 Final Project"
+title: "Policy-Support and Air Quality in U.S. Counties"
 author: "Vivien Henz"
 description: "An Investigation of the Relationship between Voting Patterns in U.S. Counties and Air Quality"
 output:
@@ -88,23 +88,7 @@ climateviews |>
   geom_histogram(fill = "dodgerblue1", color = "black")+
   labs(title = "Dependent Variable Distribution", x = "County AQI score", y = "Frequency")
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+The majority of AQI scores in U.S. counties are located between the 40-80 range, crossing the good to moderate zones as classified by the EPA.
 
 
 
