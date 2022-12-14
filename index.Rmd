@@ -142,7 +142,7 @@ plot2 <- climateviews|>
 plot2
 
 ```
-It is important to note that I take the log of county population and not population itself because county population in the U.S. varies from hundreds to millions, compressing the data and therefore producing ineffective visualizations. As we can see from the first scatterplot, there is a strong positive correlation between county population and support for regulating CO2 as a pollutant. Furthermore, in the second scatterplot, we can interpret that there is also a somewhat weak positive correlation betzeen county population and AQI scores. From these findings, we can confirm that population is an actual confounder in the inital relationship that we are investigating.
+It is important to note that I take the log of county population and not population itself because county population in the U.S. varies from hundreds to millions, compressing the data and therefore producing ineffective visualizations. As we can see from the first scatterplot, there is a strong positive correlation between county population and support for regulating CO2 as a pollutant. In the second scatterplot, we can interpret that there is a somewhat weak positive correlation between county population and AQI scores. From these findings, we can confirm that population is an actual confounder in the inital relationship that we are investigating.
 
 
 #### Multi-Variable Regression
@@ -159,9 +159,12 @@ modelsummary::modelsummary(reg_control,title = "Table 1: CO2 Regulation Support,
                            gof_map = c("nobs", "r.squared", "adj.r.squared"))
 
 ```
-Here the coefficient of interest is that of the AQI score of -0.016. Causually speaking, this can be interpreted as the following: while controlling for county population, when support for regulating CO2 as a pollutant increases by 1%, the AQI score of the county decreases by 1.6%. This supports my hypothesis that more favorable support for pro-environmental policies actually leads to better air quality in U.S. counties. However, we have to reject this result for the p-value is 0.148, meaning that the probability that this result is due to random chance is 14.8%, rendering it not statistically significant.
+Here, the coefficient of -0.016 derived from `aqi_90_percentile` is of interest to this investigation. Causually speaking, this can be interpreted as the following: while controlling for county population, when support for regulating CO2 as a pollutant increases by 1%, the AQI score of the county decreases by 1.6%. I believe that this coefficient represents a causal effect. This supports my hypothesis that more favorable support for pro-environmental policies actually leads to better air quality in U.S. counties. However, we have to reject this result for the p-value is 0.148, meaning that the probability that this result is due to random chance is 14.8%, rendering it not statistically significant.
 
 ## Conclusion
+
+To summarize this investigation, it was initially found that greater support for a pro-environmental policy actually decreased air quality in a county. However, the confounding factor of county population was identified, and I then integrated a multi-variable regression controlling for that confounding factor. Subsequently, it was found that for every increase in percentage point of support for regulating CO2 as a pollutant in a county, the air quality increased by 1.6% in the same county. However, this result had to be rejected due to it being non-statistically signficicant. I do not think that there is sufficient evidence to support my hypothesis. Firstly, my only supporting result is statistically non significant. Secondly, there may be more confounding variables that I have not been able to identify. Thirdly, and most importantly, my analysis is limited by the fact that there is still the possibility that poor air quality itself may drive people to support pro-environmental policies due to these people being more exposed and therefore more politically sensitized to the issue. My analysis could be improved by looking at the partisanship of different counties in order to assess its impact on air quality and more clearly identify the political slant of a the county. Furthermore, instead of focusing on counties, I could only focus on cities, comparing likewise areas with likewise areas and therefore eliminating much of the confounder.
+
 
 
 
