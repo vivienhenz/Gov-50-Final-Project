@@ -138,15 +138,15 @@ plot2 <- climateviews|>
     theme_classic()+
   labs(title = "County Population and AQI Score ",
        x = "Log of County Population",
-       y = "Median AQI")
+       y = "AQI Score")
 plot2
 
 ```
-It is important to note that I take the log of county population and not population itself because county population in the U.S. varies from hundreds to millions, compressing the data and therefore producing ineffective visualizations.
+It is important to note that I take the log of county population and not population itself because county population in the U.S. varies from hundreds to millions, compressing the data and therefore producing ineffective visualizations. As we can see from the first scatterplot, there is a strong positive correlation between county population and support for regulating CO2 as a pollutant. Furthermore, in the second scatterplot, we can interpret that there is also a somewhat weak positive correlation betzeen county population and AQI scores. From these findings, we can confirm that population is an actual confounder in the inital relationship that we are investigating.
 
 
 #### Multi-Variable Regression
-Therefore, we can control for the confounder that is the population variable by utilizing a multi-variable regression, in which we plot support for regulating CO2 against AQI scores and the log of the population variable:
+Therefore, we can control for the confounder, that is the population variable, by utilizing a multi-variable regression, in which we plot support for regulating CO2 against AQI scores and the log of the population variable:
 
 ```{r, echo=FALSE}
 library(infer)

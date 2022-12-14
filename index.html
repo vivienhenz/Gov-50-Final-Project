@@ -1565,9 +1565,9 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="index_files/figure-html5/unnamed-chunk-7-1.png" width="624" /><img src="index_files/figure-html5/unnamed-chunk-7-2.png" width="624" /></p>
 </div>
-<p>It is important to note that I take the log of county population and not population itself because county population in the U.S. varies from hundreds to millions, compressing the data and therefore producing ineffective visualizations.</p>
+<p>It is important to note that I take the log of county population and not population itself because county population in the U.S. varies from hundreds to millions, compressing the data and therefore producing ineffective visualizations. As we can see from the first scatterplot, there is a strong positive correlation between county population and support for regulating CO2 as a pollutant. Furthermore, in the second scatterplot, we can interpret that there is also a somewhat weak positive correlation betzeen county population and AQI scores. From these findings, we can confirm that population is an actual confounder in the inital relationship that we are investigating.</p>
 <h4 id="multi-variable-regression">Multi-Variable Regression</h4>
-<p>Therefore, we can control for the confounder that is the population variable by utilizing a multi-variable regression, in which we plot support for regulating CO2 against AQI scores and the log of the population variable:</p>
+<p>Therefore, we can control for the confounder, that is the population variable, by utilizing a multi-variable regression, in which we plot support for regulating CO2 against AQI scores and the log of the population variable:</p>
 <div class="layout-chunk" data-layout="l-body">
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
