@@ -86,7 +86,9 @@ The AQI scores for U.S. counties can summarized by the following distribution:
 climateviews |>
   ggplot(mapping = aes(x = aqi_90_percentile))+
   geom_histogram(fill = "dodgerblue1", color = "black")+
+  theme_classic()+
   labs(title = "Dependent Variable Distribution", x = "County AQI score", y = "Frequency")
+
 ```
 The majority of AQI scores in U.S. counties are located between the 40-80 range, crossing the good to moderate zones as classified by the EPA.
 
@@ -103,8 +105,9 @@ The main focus of this investigation falls in analysing the relationship between
 climateviews |>
   ggplot(mapping = aes(x = regulate,
                        y = aqi_90_percentile))+
-  geom_point(alpha = 0.5, color = "dodgerblue1")+
-  geom_smooth(method = "lm", se = F, color = "black")+
+  geom_point(alpha = 0.4, color = "dodgerblue1")+
+  geom_smooth(method = "lm", se = T, color = "black")+
+  theme_classic()+
   labs(title = "Support for Regulating CO2 as Pollutant and County AQI Score",
             x = "Percentage of County Pop. that Support Regulating CO2 as a Pollutant",
             y = "County AQI Score")
@@ -119,8 +122,9 @@ Therefore, I identify county population as a confounding factor for both
 plot1 <- climateviews|>
   ggplot(mapping = aes(x = log(TotalPop),
                        y = regulate))+
-  geom_point(alpha = 0.5, color = "Dodgerblue1")+
-  geom_smooth(method = "lm", se = F, color = "black")+
+  geom_point(alpha = 0.4, color = "Dodgerblue1")+
+  geom_smooth(method = "lm", se = T, color = "black")+
+    theme_classic()+
   labs(title = "County Population and Support for Regulating CO2 as Pollutant",
        x = "Log of County Population",
        y = "Perc. of County Supporting Regulating CO2 as Pollutant")
@@ -129,8 +133,9 @@ plot1
 plot2 <- climateviews|>
   ggplot(mapping = aes(x = log(TotalPop),
                        y = aqi_90_percentile))+
-  geom_point(alpha = 0.5, color = "Dodgerblue1")+
-  geom_smooth(method = "lm", se = F, color = "Black")+
+  geom_point(alpha = 0.4, color = "Dodgerblue1")+
+  geom_smooth(method = "lm", se = T, color = "Black")+
+    theme_classic()+
   labs(title = "County Population and AQI Score ",
        x = "Log of County Population",
        y = "Median AQI")
